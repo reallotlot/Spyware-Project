@@ -1,9 +1,9 @@
 rule racism{
     strings:
-        $strg1 = "hate"
-        $strg2 = "jews"
+        $strg1 = {}
+        $strg2 = ""
     condition:
-        all of them
+        any of them
 }
 
 rule spyware{
