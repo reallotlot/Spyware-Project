@@ -6,15 +6,24 @@ from PyQt6.QtWidgets import QApplication, QLineEdit, QWidget, QPushButton, QVBox
 from PyQt6.QtGui import QIcon
 
 
+def change(button: QPushButton):
+    button.setText("changed!")
+
+
 def window():
     app = QApplication(sys.argv)
     win = QWidget()
-    win.setGeometry(0, 0, 960, 540)
     win.setWindowTitle("SpywareDetection")
+    win.setFixedSize(960,540)
     
     ico = QIcon("Design\\logo.png")
     win.setWindowIcon(ico)
     
+    button = QPushButton(win)
+    button.setText("CHANGE TEXT!!!")
+    button.setGeometry(350,200,100,50)
+    
+    button.clicked.connect(lambda: change(button))
     
     win.show()
     
