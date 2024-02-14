@@ -1,26 +1,7 @@
-rule racism{
+rule DOSexe {
 
     strings:
-        $nword = "nig" nocase
-
-    condition:
-        any of them
-}
-
-
-rule spyware{
-    strings:
-        $icmp = "ICMP"
-        $shutil = "shutil.move"
-    condition:
-        any of them
-}
-
-
-rule keylogger {
-
-    strings:
-        $hiding = "stealth"
+        $mz  = { 4D 5A } 
 
     condition:
         any of them
