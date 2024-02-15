@@ -1,14 +1,22 @@
 # THIS FILE WILL HANDLE THE GUI AND WORK WITH THE SERVER
 # TO INFORM THE USER ON ANY ACTIVITY
 
+#import outside libraries 
 import sys
-from PyQt6.QtWidgets import QApplication, QLineEdit, QWidget, QPushButton, QVBoxLayout
+from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QIcon
 
+#import inside scripts
+from Spyware_Manager import detection
 
-def change(button: QPushButton):
-    button.setText("changed!")
 
+def show_res(output: QTextEdit):
+    res = detection.ScanFile()
+    text = ""
+    for i in res:
+        if i != []:
+            text = text.join(str(i))
+    output.setText(text)
 
 def window():
     app = QApplication(sys.argv)
@@ -16,14 +24,24 @@ def window():
     win.setWindowTitle("SpywareDetection")
     win.setFixedSize(960,540)
     
+    layout = QVBoxLayout()
+    win.setLayout(layout)
+
     ico = QIcon("Design\\logo.png")
     win.setWindowIcon(ico)
     
-    button = QPushButton(win)
-    button.setText("CHANGE TEXT!!!")
-    button.setGeometry(350,200,100,50)
     
-    button.clicked.connect(lambda: change(button))
+    button = QPushButton()
+    button.setText("Scan")
+    layout.addWidget(button)
+    
+    output = QTextEdit()
+    layout.addWidget(output)
+    
+    
+    #buttons functions
+    button.clicked.connect(lambda: show_res(output))
+    
     
     win.show()
     

@@ -1,11 +1,15 @@
 import os
 import yara
 
-rule_path = "Spyware_Manager\\YARA_RULES.yar"
-rules = yara.compile(rule_path)
+def ScanFile():
+    rule_path = "Spyware_Manager\\YARA_RULES.yar"
+    rules = yara.compile(rule_path)
+    results = []
 
-for file in os.listdir("malware"):
-    matches = rules.match(f"malware\\{file}")
-    print(matches)
+    for file in os.listdir("malware"):
+        matches = rules.match(f"malware\\{file}")
+        results.append(matches)
+        
+    return results
 
 
