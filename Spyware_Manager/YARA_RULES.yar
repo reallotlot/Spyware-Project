@@ -1,7 +1,7 @@
 rule DOSexe {
 
     strings:
-        $mz  = { 4D 5A } 
+        $mz  = "mz"
 
     condition:
         any of them
