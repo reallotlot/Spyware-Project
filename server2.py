@@ -11,7 +11,7 @@ import socket
 
 
 #local imports
-from Spyware_Manager import detection
+from Spyware_Manager import detection2
 
 
 #set up server settings
@@ -32,7 +32,7 @@ while True:
     while msg is None:
         msg = client.recv(2048).decode()
     if msg.lower() == "scan":
-        res = detection.ScanFile()
+        res = detection2.ScanFile()
         text = ",".join(str(i) for i in res if i != [])
         client.send(text.encode())
         
