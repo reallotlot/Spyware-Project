@@ -3,7 +3,8 @@
 
 #import outside libraries 
 import sys, socket
-from PyQt6.QtCore import Qt
+import time
+from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 
@@ -48,8 +49,13 @@ def window():
     
     
 def show_res(output: QTextEdit):
-    text = client.recv(2048).decode()
-    output.setText(text)
+    client.send(b"scan")
+    res = None
+    while res is None:
+        time.sleep(0.05)
+        res = client.recv(2048).decode()
+        
+    output.setText(output.text() + res + "\n")
     
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
