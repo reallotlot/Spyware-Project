@@ -2,19 +2,20 @@
 # TO INFORM THE USER ON ANY ACTIVITY
 
 #import outside libraries 
-import sys
+import sys, socket
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 
-#import inside scripts
-from Spyware_Manager import detection
 
-def show_res(output: QTextEdit):
-    res = detection.ScanFile()
-    text = "".join(str(i) for i in res if i != [])
-    output.setText(text)
+#set up the socket connection
+HOST = socket.gethostbyname(socket.gethostname())
+PORT = 5555
 
+ADDR = (HOST, PORT)
+
+
+#set up the gui
 def window():
     app = QApplication(sys.argv)
     win = QWidget()
@@ -44,5 +45,18 @@ def window():
     win.show()
     
     sys.exit(app.exec())
-if __name__ == "__main__":   
-    window()
+    
+    
+def show_res(output: QTextEdit):
+    text = client.recv(2048).decode()
+    output.setText(text)
+    
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+try:
+    client.connect(ADDR)
+except:
+    print("problem")
+    
+window()
+    
