@@ -33,7 +33,6 @@ while True:
         msg = client.recv(2048).decode()
     if msg.lower() == "scan":
         res = detection.ScanFile()
-        text = ",".join(str(i) for i in res if i != [])
-        client.send(text.encode())
+        client.send(res.encode())
         
     msg = None

@@ -9,7 +9,9 @@ def ScanFile():
     for file in os.listdir("malware"):
         matches = rules.match(f"malware\\{file}")
         results.append(matches)
-        
+    results = ",".join(str(i) for i in results if i != [])
     return results
 
 
+if __name__ == "__main__":
+    print(ScanFile())
