@@ -49,7 +49,7 @@ def window():
     
     
 def show_res(output: QTextEdit):
-    client.send(b"scan")
+    client.send(bytes.fromhex("7363616E"))
     res = None
     while res is None:
         time.sleep(0.05)
