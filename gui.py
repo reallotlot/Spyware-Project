@@ -4,24 +4,24 @@
 #import outside libraries 
 import sys, socket
 import time
+#from Spyware_Manager import manager
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 
-
-#set up the socket connection
-HOST = socket.gethostbyname(socket.gethostname())
-PORT = 5555
-
-ADDR = (HOST, PORT)
-
+#set up the side navigation bar
+def side_bar(window: QWidget):
+    background = QLabel(window)
+    background.setGeometry(0,0,100,540)
+    background.setStyleSheet()
 
 #set up the gui
-def window():
+def main():
     app = QApplication(sys.argv)
     win = QWidget()
     win.setWindowTitle("SpywareDetection")
     win.setFixedSize(960,540)
+    win.setStyleSheet("background-color: #f5f5dc")
     
     layout = QVBoxLayout()
     win.setLayout(layout)
@@ -38,6 +38,10 @@ def window():
     output.setFont(QFont('Arial', 35))
     layout.addWidget(output)
     
+
+    #add sidebar
+    side_bar(win)
+    
     
     #buttons functions
     button.clicked.connect(lambda: show_res(output))
@@ -49,20 +53,8 @@ def window():
     
     
 def show_res(output: QTextEdit):
-    client.send(bytes.fromhex("7363616E"))
-    res = None
-    while res is None:
-        time.sleep(0.05)
-        res = client.recv(2048).decode()
-        
-    output.setText(output.text() + res + "\n")
+    output.setText(output.text() + manager.getHash() + "\n")
     
-
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-try:
-    client.connect(ADDR)
-except:
-    print("problem")
-    
-window()
+if __name__ == "__main__":
+    main()
     
