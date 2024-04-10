@@ -41,9 +41,8 @@ def check_sha256(sha256):
 def hash_scan(path):
     md5 = get_md5(path)
     sha256 = get_sha256(path)
-    print(check_md5(md5))
-    print(check_sha256(sha256))
+    return check_md5(md5) or check_sha256(sha256)
     
         
 if __name__ == "__main__":
-    hash_scan("malware\eicar.com")
+    print(hash_scan("malware\eicar.com"))

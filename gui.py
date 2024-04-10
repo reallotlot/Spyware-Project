@@ -53,7 +53,7 @@ def main():
     
     
 def show_res(output: QTextEdit):
-    output.setText(output.text() + manager.getHash() + "\n")
+    output.setText(output.text() + "\n")
     
 if __name__ == "__main__":
     main()
