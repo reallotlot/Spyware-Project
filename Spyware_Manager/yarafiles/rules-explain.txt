@@ -1,0 +1,7 @@
+rule master is a free to use open source rulesets for yara.
+ive been using those rules in my project as it lets me detect a large
+amount of malware and malicious files using it.
+
+the pe rules are also from the same source however focus on packers so i
+decided not to put them in the same folder as the rules that focus more on
+spywares.

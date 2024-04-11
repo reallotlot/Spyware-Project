@@ -45,4 +45,4 @@ def hash_scan(path):
     
         
 if __name__ == "__main__":
-    print(hash_scan("malware\eicar.com"))
+    print(hash_scan(r"malware\delete_windows_malware.exe"))
