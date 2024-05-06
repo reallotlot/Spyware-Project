@@ -1,4 +1,5 @@
 import hashlib
+import os
 
 #get a file md5 hash
 def get_md5(path):
@@ -33,16 +34,29 @@ def check_sha256(sha256):
     info = list(open("Spyware_Manager\hashfiles\sha256info.txt", 'r').read().split("\n"))
     for i in range(len(hashes)):
         if sha256 in hashes[i]:
-            print(sha256 + " " + info[i])
             return True
     return False
 
 
-def hash_scan(path):
+def hash_scan_file(path):
     md5 = get_md5(path)
     sha256 = get_sha256(path)
+    print(md5 + "\n" + sha256 + "\n")
     return check_md5(md5) or check_sha256(sha256)
     
+
+def hash_scan_dir(path):
+    results = {}
+    for file in os.listdir(path):
+        file_path = os.path.join(path, file)
+        if os.path.isdir(file_path):
+            hash_scan_dir(file_path)
+        else:
+            result = hash_scan_file(file_path)
+            if result:
+                results[file] = result
+    return results        
         
+               
 if __name__ == "__main__":
-    print(hash_scan(r"malware\delete_windows_malware.exe"))
+    print(hash_scan_dir(r"malware"))
