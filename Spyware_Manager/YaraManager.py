@@ -5,7 +5,7 @@ import yara
 #DO NOT CHANGE THIS PATH UNLESS YOU KNOW WHAT YOU ARE DOING!
 #DOING SO WILL CAUSE THE PROGRAM TO NOT BE ABLE TO USE MOST OF THE YARA RULES
 #CAUSING SECURITY RISKS
-compiled_rules_path = r"Spyware_Manager\yarafiles\compiled-rule-master"
+compiled_rules_path = r"..\Spyware_Manager\yarafiles\compiled-rule-master"
 
 
 #one time run will only run once if the compiled rules file is empty!!!!!!
@@ -15,7 +15,7 @@ def compile_rulemaster_rules():
         time.sleep(.3)
         print("loading")
         
-    path = r"Spyware_Manager\yarafiles\rules-master"
+    path = r"..\Spyware_Manager\yarafiles\rules-master"
     for mal in os.listdir(path):
         rule_path = os.path.join(path, mal)
         rules = yara.compile(rule_path)
@@ -35,22 +35,21 @@ def comp():
 
 def scan_dir(path):
     comp()
+    results = {}
     for rule_file in os.listdir(compiled_rules_path):
         rules = yara.load(os.path.join(compiled_rules_path, rule_file))
         for file in (os.listdir(path)):
             file_path = os.path.join(path, file)
             if os.path.isdir(file_path):
-                scan_dir(file_path)
+                results = results.update(scan_dir(file_path))
             else:
                 matches = rules.match(file_path)
                 if matches != []:
-                    print(matches)
-
+                    print(rule_file)
+                    results[file_path] = matches
+    return results
 
 
 
 if __name__ == "__main__":
-    
-        
-        
-    scan_dir(r'malware')
+    print(scan_dir(r'..\malware'))

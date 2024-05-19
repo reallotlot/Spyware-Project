@@ -3,12 +3,22 @@ import requests
 import hashlib
 import os
 
+from cryptography import fernet
 from vt import Client
 
 
-#api key DO NOT CHANGE!
+
+#LOAD ENCRYPTED API KEY
+def load_key():
+    enc_key = os.getenv("API_ENCRYPTION_KEY")
+    api_key = ''
+    with open(r'api_keys.txt', "rb") as file:
+        api_key = file.read().split(b"\n")[0]
+        
+    return fernet.Fernet(enc_key).decrypt(api_key).decode()
+
 if True:
-    api_key = "390d84de22c52785ecabaa956966b4aedba5a793c41e65c53543baea26c2c1b3"
+    api_key = load_key()
     vt_client = Client(api_key)
     
     
@@ -60,7 +70,7 @@ def scan_dir(path):
     
     
 if __name__ == "__main__":
-    path = r'malware'
+    path = r'C:\Users\lotan\מסמכים\Spyware-Project\malware'
     
     print(scan_dir(path))
     

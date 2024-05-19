@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./Spyware_Manager"
+    ],
+    "python.analysis.autoImportCompletions": false
+}
