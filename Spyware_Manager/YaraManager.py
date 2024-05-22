@@ -38,15 +38,21 @@ def scan_dir(path):
     results = {}
     for rule_file in os.listdir(compiled_rules_path):
         rules = yara.load(os.path.join(compiled_rules_path, rule_file))
-        for file in (os.listdir(path)):
-            file_path = os.path.join(path, file)
-            if os.path.isdir(file_path):
-                results = results.update(scan_dir(file_path))
-            else:
-                matches = rules.match(file_path)
-                if matches != []:
-                    print(rule_file)
-                    results[file_path] = matches
+        if not os.path.isdir(path):
+            matches = rules.match(path)
+            if matches != []:
+                print(rule_file)
+                results[path] = matches
+        else:
+            for file in (os.listdir(path)):
+                file_path = os.path.join(path, file)
+                if os.path.isdir(file_path):
+                    results = results.update(scan_dir(file_path))
+                else:
+                    matches = rules.match(file_path)
+                    if matches != []:
+                        print(rule_file)
+                        results[file_path] = matches
     return results
 
 

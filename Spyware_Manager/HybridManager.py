@@ -57,7 +57,8 @@ def scan_file(path, file_name):
         if type in file_name:
             break 
     else:
-        return 'Invalid File' #file is not valid for scanning
+        print('invalid file: ', file_name)
+        return None #file is not valid for scanning
          
     #set up the data for the sandbox analysis
     payload = {
@@ -111,15 +112,30 @@ def scan_file(path, file_name):
     
     if report_response.status_code == 200:
         info = report_response.json()
-        return [info.get('threat_level'), info.get('name')]
+        info_dict = {
+            'name': info.get('submit_name'),
+            'threat_level': info.get('threat_level'),
+            'threat_score': info.get('threat_score'),
+            'verdict': info.get('verdict')
+        }
+        return info_dict
     else:
         print("failed to fetch response")
         return None
     
     
 def scan_dir(path):
-    pass
+    results = []
+    for file in os.listdir(path):
+        file_path = os.path.join(path,file)
+        if os.path.isdir(file_path):
+            results += scan_dir(file_path)
+        else:
+            res = scan_file(file_path, file)
+            if res is not None:
+                results.append(res)
+    return results        
     
     
 if __name__ == "__main__":
-    print(scan_file(r'..\malware\update.exe', r'update.exe'))
+    print(scan_dir(r'..\malware'))

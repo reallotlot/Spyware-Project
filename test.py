@@ -18,3 +18,18 @@ import os
 #    file.write(evt + b'\n' + ehybrid)
 ########################ENCRYPT API KEYS##########################
 
+#        _sopen = cdll.msvcrt._sopen
+#        _close = cdll.msvcrt._close
+#        _SH_DENYRW = 0x10
+#
+#        if not os.access(self.quarantine_file, os.F_OK):
+#            return None # file doesn't exist
+#        h = _sopen(self.quarantine_file, 0, _SH_DENYRW, 0)
+#        if h == 3:
+#            _close(h)
+#            return False # file is not opened by anyone else
+#        _close(h)
+#        return True # file is already open
+        
+        
+        
