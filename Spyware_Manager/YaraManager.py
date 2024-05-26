@@ -33,7 +33,7 @@ def comp():
 
 
 
-def scan_dir(path):
+def scan_yara(path):
     comp()
     results = {}
     for rule_file in os.listdir(compiled_rules_path):
@@ -41,21 +41,19 @@ def scan_dir(path):
         if not os.path.isdir(path):
             matches = rules.match(path)
             if matches != []:
-                print(rule_file)
-                results[path] = matches
+                results[os.path.basename(path)] = matches
         else:
             for file in (os.listdir(path)):
                 file_path = os.path.join(path, file)
                 if os.path.isdir(file_path):
-                    results = results.update(scan_dir(file_path))
+                    results = results.update(scan_yara(file_path))
                 else:
                     matches = rules.match(file_path)
                     if matches != []:
-                        print(rule_file)
-                        results[file_path] = matches
+                        results[file] = matches
     return results
 
 
 
 if __name__ == "__main__":
-    print(scan_dir(r'..\malware'))
+    print(scan_yara(r'..\malware'))

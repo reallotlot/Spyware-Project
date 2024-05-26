@@ -126,15 +126,18 @@ def scan_file(path, file_name):
     
 def scan_dir(path):
     results = []
-    for file in os.listdir(path):
-        file_path = os.path.join(path,file)
-        if os.path.isdir(file_path):
-            results += scan_dir(file_path)
-        else:
-            res = scan_file(file_path, file)
-            if res is not None:
-                results.append(res)
-    return results        
+    if not os.path.isdir(path):
+        results += scan_file(path, os.path.basename(path))
+    else:
+        for file in os.listdir(path):
+            file_path = os.path.join(path,file)
+            if os.path.isdir(file_path):
+                results += scan_dir(file_path)
+            else:
+                res = scan_file(file_path, file)
+                if res is not None:
+                    results.append(res)
+        return results        
     
     
 if __name__ == "__main__":

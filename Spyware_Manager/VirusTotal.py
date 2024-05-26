@@ -36,20 +36,22 @@ def scan_file(path):
         scan_result = vt_client.get_object(f"/analyses/{scan_request.id}")
         print(scan_result.status)
         
-        #get the scan anlyses results
-        scan_result = vt_client.get_object(f"/files/{sha256}")
-        results = scan_result.last_analysis_results
-        data = {
-            'name': scan_result.names[0],
-            'report': False
-        }
         
-        for vendor in results:
-            info = results[vendor]
-            if vendor.lower() in vendors and info['category'] in ['malicious', 'suspicious']:
-                data['report'] = True
-                
-        return data
+        if scan_result.status == 'completed':
+            #get the scan anlyses results
+            scan_result = vt_client.get_object(f"/files/{sha256}")
+            results = scan_result.last_analysis_results
+            data = {
+                'name': scan_result.names[0],
+                'report': False
+            }
+
+            for vendor in results:
+                info = results[vendor]
+                if vendor.lower() in vendors and info['category'] in ['malicious', 'suspicious']:
+                    data['report'] = True
+
+            return data
             
  
             

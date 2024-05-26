@@ -1,0 +1,8 @@
+cryptography==42.0.5
+itemadapter==0.8.0
+PyQt6==6.7.0
+PyQt6_sip==13.6.0
+pywin32==306
+Requests==2.32.2
+Scrapy==2.11.1
+yara_python==4.3.1
