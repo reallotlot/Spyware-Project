@@ -11,8 +11,8 @@ from cryptography import fernet
 # load the encrypted api key
 def load_key():
     enc_key = os.getenv("API_ENCRYPTION_KEY")
-    api_key = ''
-    with open(r'api_keys.txt', "rb") as file:
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'api_keys.txt')
+    with open(path, "rb") as file:
         api_key = file.read().split(b"\n")[1]
         
     return fernet.Fernet(enc_key).decrypt(api_key).decode()
@@ -57,7 +57,7 @@ def scan_file(path, file_name):
         if type in file_name:
             break 
     else:
-        print('invalid file: ', file_name)
+        #print('invalid file: ', file_name)
         return None #file is not valid for scanning
          
     #set up the data for the sandbox analysis
@@ -80,12 +80,12 @@ def scan_file(path, file_name):
     if response.status_code == 201:
         analysis_result = response.json()
         analysis_id = analysis_result.get('job_id')
-        print("submitted file")
-        print("analysis ID:", analysis_id)
+        #print("submitted file")
+        #print("analysis ID:", analysis_id)
     else:
-        print("Failed to submit file.")
-        print("Status Code:", response.status_code)
-        print("Response:", response.text)
+        #print("Failed to submit file.")
+        #print("Status Code:", response.status_code)
+        #print("Response:", response.text)
         return None
     
     
@@ -96,14 +96,14 @@ def scan_file(path, file_name):
         status_data = status_response.json()
         
         if status_data.get('state') == 'SUCCESS':
-            print("analysis complete.")
+            #print("analysis complete.")
             break
         elif status_data.get('state') == 'IN_PROGRESS':
-            print("analysis in progress.")
+            #print("analysis in progress.")
             time.sleep(5)
         else:
-            print("unexpected status:", status_data)
-            break
+            #print("unexpected status:", status_data)
+            return None
     
     
     #retrieve the data from the reprot
@@ -120,7 +120,7 @@ def scan_file(path, file_name):
         }
         return info_dict
     else:
-        print("failed to fetch response")
+        #print("failed to fetch response")
         return None
     
     
@@ -141,4 +141,4 @@ def scan_dir(path):
     
     
 if __name__ == "__main__":
-    print(scan_dir(r'..\malware'))
+    pass

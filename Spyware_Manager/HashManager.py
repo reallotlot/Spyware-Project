@@ -21,7 +21,8 @@ def get_sha256(path):
 
 #check for the md5 and sha256 in the malicious hash file (respectively)  
 def check_md5(md5):
-    with open(r"..\Spyware_Manager\hashfiles\md5.txt", 'r') as file:
+    path = f'{os.path.dirname(os.path.abspath(__file__))}\hashfiles\md5.txt'
+    with open(path, 'r') as file:
         text = list(file.read().split("\n"))
         if md5 in text:
             print(md5)
@@ -30,8 +31,8 @@ def check_md5(md5):
 
 
 def check_sha256(sha256):
-    hashes = list(open(r"..\Spyware_Manager\hashfiles\sha256hashes.txt", 'r').read().split("\n"))
-    info = list(open(r"..\Spyware_Manager\hashfiles\sha256info.txt", 'r').read().split("\n"))
+    hash_path = f'{os.path.dirname(os.path.abspath(__file__))}\hashfiles\sha256hashes.txt'
+    hashes = list(open(hash_path, 'r').read().split("\n"))
     for i in range(len(hashes)):
         if sha256 in hashes[i]:
             return True
@@ -41,7 +42,7 @@ def check_sha256(sha256):
 def hash_scan_file(path):
     md5 = get_md5(path)
     sha256 = get_sha256(path)
-    print(md5 + "\n" + sha256 + "\n")
+    #print(md5 + "\n" + sha256 + "\n")
     return check_md5(md5) or check_sha256(sha256)
     
 
@@ -59,4 +60,4 @@ def hash_scan_dir(path):
         
                
 if __name__ == "__main__":
-    print(hash_scan_dir(r"..\malware"))
+    pass

@@ -25,11 +25,10 @@ def compile_rulemaster_rules():
 def comp():
     if os.path.exists(compiled_rules_path):
         if os.listdir(compiled_rules_path) != []:
-            print("already compiled")
+            pass#print("already compiled")
     else:
-        
         compile_rulemaster_rules()
-        print("done")
+        #print("done")
 
 
 
@@ -56,4 +55,4 @@ def scan_yara(path):
 
 
 if __name__ == "__main__":
-    print(scan_yara(r'..\malware'))
+    pass

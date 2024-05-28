@@ -1,5 +1,9 @@
-from cryptography import fernet
-import os
+from Spyware_Manager import Manager
+
+
+analyze = Manager.Analysis(r'malware')
+result = analyze.run_analysis()
+print(result)
 
 ########################ENCRYPT API KEYS##########################
 #key = os.getenv('API_ENCRYPTION_KEY')

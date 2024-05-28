@@ -1,10 +1,5 @@
-import datetime
 import os
 import shutil
-import subprocess
-import pywintypes
-import win32file
-import win32con
 
 
 
@@ -45,5 +40,4 @@ class disinfect():
             
             
 if __name__ == "__main__":
-    sus_file = disinfect(r'..\malware\AutoClicker.exe', 'AutoClicker.exe')
-    sus_file.run_disinfection()
+    pass
