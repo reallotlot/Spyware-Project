@@ -1,0 +1,25 @@
+QWidget#sidebar {
+    background-color: #2d8c48;
+    color: rgb(0, 0, 0);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+QPushButton#sidebar {
+    position: fixed;
+    top: 10%;
+    font-size: 20px;
+    background-color: #2d8c48;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+QPushButton#siderbar:hover {
+    background-color: #194f28;
+}
+
+QLabel#sidebar {
+    text-align: center;
+    font-size: 25px;
+    border-bottom: 1px solid black;
+}
+

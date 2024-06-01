@@ -114,11 +114,13 @@ def scan_file(path, file_name):
         info = report_response.json()
         info_dict = {
             'name': info.get('submit_name'),
-            'threat_level': info.get('threat_level'),
-            'threat_score': info.get('threat_score'),
+            'path': f'{os.path.abspath(path)}',
             'verdict': info.get('verdict')
         }
-        return info_dict
+        if info_dict['verdict'] in ['malicious','suspicious']:
+            return info_dict
+        else:
+            return None
     else:
         #print("failed to fetch response")
         return None
@@ -127,7 +129,8 @@ def scan_file(path, file_name):
 def scan_dir(path):
     results = []
     if not os.path.isdir(path):
-        results += scan_file(path, os.path.basename(path))
+        res = scan_file(path, os.path.basename(path))
+        if res is not None: results += res 
     else:
         for file in os.listdir(path):
             file_path = os.path.join(path,file)
@@ -137,7 +140,7 @@ def scan_dir(path):
                 res = scan_file(file_path, file)
                 if res is not None:
                     results.append(res)
-        return results        
+        return  results        
     
     
 if __name__ == "__main__":

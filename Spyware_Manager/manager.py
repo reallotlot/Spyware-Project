@@ -1,6 +1,7 @@
-from . import HashManager ,YaraManager ,HybridManager ,VirusTotal
+from . import HashManager ,YaraManager ,HybridManager ,VirusTotal, Disinfection
 import os
 import threading
+import pymongo
 
 
 class Analysis():
@@ -10,9 +11,9 @@ class Analysis():
         self.lock = threading.Lock()
 
     def __scan_hash(self, path):
-        res = HashManager.hash_scan_dir(path) if os.path.isdir(path) else HashManager.hash_scan_file(path)
+        res = HashManager.hash_scan_dir(path)
         with self.lock:
-            self.results[0] = res
+            self.results[0] = ('hash', res)
         return res
         
 
@@ -20,21 +21,47 @@ class Analysis():
     def __scan_yara(self, path):
         res = YaraManager.scan_yara(path)
         with self.lock:
-            self.results[1] = res
+            self.results[1] = ('yara', res)
         return res
 
     def __scan_hybrid(self, path):
         res = HybridManager.scan_dir(path)
         with self.lock:
-            self.results[3] = res
+            self.results[2] = ('hybrid', res)
         return res
 
 
     def __virus_total(self, path):
         res = VirusTotal.scan_dir(path)
         with self.lock:
-            self.results[3] = res
+            self.results[3] = ('vt', res)
         return res
+    
+    
+    def __send_gui(self):
+        finalResult = ''
+        # turn the analysis results into human readable text
+        for res in self.results:
+            if res[1] is not None and res[1] != [] and res[1] != {}:
+                for file in res[1]:
+                    curPath = file['path']
+                    if curPath not in finalResult:
+                        finalResult += f'Malicious file detected at {curPath}\n'
+        if finalResult == '':
+            return f"{self.path} is clear!"
+        return finalResult
+    
+
+    def __save_data(self):
+        pass
+
+    
+    def load_data(self) -> str: # <-- not private and wil always return the data in the database
+        pass
+
+
+    def disinfect(self, path, file_name):
+        pass
 
     def run_analysis(self):
         #set up the threads
@@ -54,9 +81,13 @@ class Analysis():
         for thread in threads:
             thread.join()
 
+        #save scan data to database
+        self.save_data()
+
+
         # print the results
         print("all threads finished.")
-        return self.results
+        return self.__send_gui()
 
 
 

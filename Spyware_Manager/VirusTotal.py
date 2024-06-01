@@ -74,7 +74,7 @@ def scan_file(path):
                     if res[vendor]['category'].lower() in ['malicious', 'suspicious']:
                         info = {
                             'name' : vendor,
-                            'file' : os.path.basename(path),
+                            'path' : f'{os.path.abspath(path)}',
                             'category' : True
                         }
                         return info
@@ -103,9 +103,8 @@ def scan_dir(path):
             else:
                 res = scan_dir(file_path)
                 results = results + res
-
         
-    return results
+    return  results
     
     
 if __name__ == "__main__":

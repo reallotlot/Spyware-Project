@@ -47,7 +47,7 @@ def hash_scan_file(path):
     
 
 def hash_scan_dir(path):
-    results = {}
+    results = []
     for file in os.listdir(path):
         file_path = os.path.join(path, file)
         if os.path.isdir(file_path):
@@ -55,8 +55,8 @@ def hash_scan_dir(path):
         else:
             result = hash_scan_file(file_path)
             if result:
-                results[file] = result
-    return results        
+                results.append({'path': os.path.abspath(path)})
+    return results
         
                
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ import yara
 #DO NOT CHANGE THIS PATH UNLESS YOU KNOW WHAT YOU ARE DOING!
 #DOING SO WILL CAUSE THE PROGRAM TO NOT BE ABLE TO USE MOST OF THE YARA RULES
 #CAUSING SECURITY RISKS
-compiled_rules_path = r"..\Spyware_Manager\yarafiles\compiled-rule-master"
+compiled_rules_path = f'{os.path.dirname(os.path.abspath(__file__))}\yarafiles\compiled-rule-master'
 
 
 #one time run will only run once if the compiled rules file is empty!!!!!!
@@ -15,7 +15,7 @@ def compile_rulemaster_rules():
         time.sleep(.3)
         print("loading")
         
-    path = r"..\Spyware_Manager\yarafiles\rules-master"
+    path = f'{os.path.dirname(os.path.abspath(__file__))}\yarafiles\rule-master'
     for mal in os.listdir(path):
         rule_path = os.path.join(path, mal)
         rules = yara.compile(rule_path)
@@ -34,13 +34,13 @@ def comp():
 
 def scan_yara(path):
     comp()
-    results = {}
+    results = []
     for rule_file in os.listdir(compiled_rules_path):
         rules = yara.load(os.path.join(compiled_rules_path, rule_file))
         if not os.path.isdir(path):
             matches = rules.match(path)
             if matches != []:
-                results[os.path.basename(path)] = matches
+                results.append({'path': os.path.abspath(path), 'type': matches})
         else:
             for file in (os.listdir(path)):
                 file_path = os.path.join(path, file)
@@ -49,7 +49,7 @@ def scan_yara(path):
                 else:
                     matches = rules.match(file_path)
                     if matches != []:
-                        results[file] = matches
+                        results.append({'path': os.path.abspath(path), 'type': matches})
     return results
 
 
