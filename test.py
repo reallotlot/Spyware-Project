@@ -1,7 +1,7 @@
 from Spyware_Manager import Manager
 
 
-analyze = Manager.Analysis(r'malware\update.exe')
+analyze = Manager.Analysis(r'malware')
 result = analyze.run_analysis()
 print(result)
 

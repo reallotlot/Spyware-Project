@@ -92,7 +92,7 @@ def scan_dir(path):
     if not os.path.isdir(path):
         res = scan_file(path)
         if res is not None:
-            return res
+            results.append(res)
     else:
         for file in os.listdir(path):
             file_path = os.path.join(path, file)

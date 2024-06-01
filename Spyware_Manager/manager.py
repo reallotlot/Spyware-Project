@@ -1,6 +1,7 @@
 from . import HashManager ,YaraManager ,HybridManager ,VirusTotal, Disinfection
 import os
 import threading
+from cryptography.fernet import Fernet
 from pymongo import MongoClient
 
 
@@ -12,11 +13,13 @@ class Analysis():
 
 
     def __load_key(self):
-        try:
-            key = os.getenv("DATABASE_KEY")
-            return key
-        except:
-            pass
+        key = os.getenv("DATABASE_KEY")
+        if key is None:
+            key = Fernet.generate_key()
+            os.system(f'setx DATABASE_KEY {key}')
+            print(key)
+        return key
+            
 
 
     def __scan_hash(self, path):
@@ -51,19 +54,20 @@ class Analysis():
         finalResult = ''
         # turn the analysis results into human readable text
         for res in self.results:
-            print(res)
-            curPath = res[1]['path']
-            if curPath not in finalResult:
-                finalResult += f'Malicious file detected at {curPath}\n'
+            for file in res[1]:
+                curPath = file['path']
+                if curPath not in finalResult:
+                    finalResult += f'Malicious file detected at {curPath}\n'
         if finalResult == '':
             return f"{self.path} is clear!"
         return finalResult
     
 
     def __save_data(self):
-        return ''
         client = MongoClient('localhost')
-        key = self.__load_key()
+        enc_key = self.__load_key()
+        for res in self.results():
+          pass  
         
 
     
@@ -94,10 +98,8 @@ class Analysis():
         print("all threads finished.")
 
 
-        # Create a new list with only non-empty results
-        filtered_results = [res for res in self.results if res[1] != [] and res[1] is not None]
-        print(filtered_results)
-        
+        #create a new list with only non-empty results
+        self.results = [res for res in self.results if res[1] != [] and res[1] is not None]
 
         #save scan data to database
         self.__save_data()
