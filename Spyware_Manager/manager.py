@@ -1,7 +1,7 @@
 from . import HashManager ,YaraManager ,HybridManager ,VirusTotal, Disinfection
 import os
 import threading
-import pymongo
+from pymongo import MongoClient
 
 
 class Analysis():
@@ -9,6 +9,15 @@ class Analysis():
         self.path = path
         self.results = [None for i in range(4)]
         self.lock = threading.Lock()
+
+
+    def __load_key(self):
+        try:
+            key = os.getenv("DATABASE_KEY")
+            return key
+        except:
+            pass
+
 
     def __scan_hash(self, path):
         res = HashManager.hash_scan_dir(path)
@@ -42,18 +51,20 @@ class Analysis():
         finalResult = ''
         # turn the analysis results into human readable text
         for res in self.results:
-            if res[1] is not None and res[1] != [] and res[1] != {}:
-                for file in res[1]:
-                    curPath = file['path']
-                    if curPath not in finalResult:
-                        finalResult += f'Malicious file detected at {curPath}\n'
+            print(res)
+            curPath = res[1]['path']
+            if curPath not in finalResult:
+                finalResult += f'Malicious file detected at {curPath}\n'
         if finalResult == '':
             return f"{self.path} is clear!"
         return finalResult
     
 
     def __save_data(self):
-        pass
+        return ''
+        client = MongoClient('localhost')
+        key = self.__load_key()
+        
 
     
     def load_data(self) -> str: # <-- not private and wil always return the data in the database
@@ -80,13 +91,22 @@ class Analysis():
         #wait for threads to finish
         for thread in threads:
             thread.join()
+        print("all threads finished.")
+
+
+        # Create a new list with only non-empty results
+        filtered_results = [res for res in self.results if res[1] != [] and res[1] is not None]
+        print(filtered_results)
+        
 
         #save scan data to database
-        self.save_data()
+        self.__save_data()
 
+
+        
 
         # print the results
-        print("all threads finished.")
+        
         return self.__send_gui()
 
 
