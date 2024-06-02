@@ -72,22 +72,24 @@ class Analysis():
         db = client['scans']
         collection = db['files']
 
-        #set up date and a ready data for each analysis
-        data = {
-            'id': self.SCAN_ID,
-            'date': datetime.now().strftime("%d/%m/%Y"),
-            'hour': datetime.now().strftime("%H:%M:%S")
-        }
+
 
         enc_key = self.__load_key()
 
         for engine in self.results:
-            data['engine'] = engine[0]
             for res in engine[1]:
-                data['name'] = res['name']
-                data['path'] = res['path']
-                data['info'] = res['info']
-                print(data)
+                #set up date and a ready data for each analysis
+                data = {
+                    'scanID': self.SCAN_ID,
+                    'date': datetime.now().strftime("%d/%m/%Y"),
+                    'hour': datetime.now().strftime("%H:%M:%S"),
+                    'engine': engine[0],
+                    'name': res['name'],
+                    'path': res['path'],
+                    'info': res['info']
+                }
+                collection.insert_one(data)
+
     
     def load_data(self) -> str: # <-- not private and wil always return the data in the database
         pass
@@ -115,7 +117,6 @@ class Analysis():
         for thread in threads:
             thread.join()
         print("all threads finished.")
-        print(self.results)
 
         #create a new list with only non-empty results
         self.results = [res for res in self.results if res[1] != [] and res[1] is not None]

@@ -40,7 +40,7 @@ def scan_yara(path):
         if not os.path.isdir(path):
             matches = rules.match(path)
             if matches != []:
-                results.append({'path': os.path.abspath(path), 'name': os.path.basename(path), 'info': matches})
+                results.append({'path': os.path.abspath(path), 'name': os.path.basename(path), 'info': rule_file})
         else:
             for file in (os.listdir(path)):
                 file_path = os.path.join(path, file)
@@ -49,7 +49,7 @@ def scan_yara(path):
                 else:
                     matches = rules.match(file_path)
                     if matches != []:
-                        results.append({'path': os.path.abspath(path), 'name': file, 'info': matches})
+                        results.append({'path': os.path.abspath(path), 'name': file, 'info': rule_file})
     return results
 
 

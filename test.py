@@ -2,8 +2,10 @@ from Spyware_Manager import Manager
 
 
 analyze = Manager.Analysis(r'malware')
-result = analyze.run_analysis()
-print(result)
+for i in range(3):
+    result = analyze.run_analysis()
+    print(result)
+analyze.load_data()
 
 ########################ENCRYPT API KEYS##########################
 #key = os.getenv('API_ENCRYPTION_KEY')
