@@ -113,11 +113,11 @@ def scan_file(path, file_name):
     if report_response.status_code == 200:
         info = report_response.json()
         info_dict = {
+            'path': os.path.abspath(path),
             'name': info.get('submit_name'),
-            'path': f'{os.path.abspath(path)}',
-            'verdict': info.get('verdict')
+            'info': info.get('verdict')
         }
-        if info_dict['verdict'] in ['malicious','suspicious']:
+        if info_dict['info'] in ['malicious','suspicious']:
             return info_dict
         else:
             return None

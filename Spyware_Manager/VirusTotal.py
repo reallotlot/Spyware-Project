@@ -73,9 +73,9 @@ def scan_file(path):
                 if vendor.lower() in trusted_vendors:
                     if res[vendor]['category'].lower() in ['malicious', 'suspicious']:
                         info = {
-                            'name' : vendor,
-                            'path' : f'{os.path.abspath(path)}',
-                            'category' : True
+                            'path' : os.path.abspath(path),
+                            'name' : os.path.basename(path),
+                            'info' : vendor
                         }
                         return info
         else:
