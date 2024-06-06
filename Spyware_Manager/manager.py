@@ -18,9 +18,10 @@ class Analysis():
     def __load_key(self):
         key = os.getenv("DATABASE_KEY")
         if key is None:
-            key = Fernet.generate_key()
+            key = Fernet.generate_key().decode()
             os.system(f'setx DATABASE_KEY {key}')
             print(key)
+            return None
         return key
             
 
@@ -53,7 +54,7 @@ class Analysis():
         return res
     
     
-    def __send_gui(self):
+    def __send_gui(self) -> str:
         finalResult = ''
         # turn the analysis results into human readable text
         for res in self.results:
@@ -66,15 +67,17 @@ class Analysis():
         return finalResult
     
 
-    def __save_data(self):
+    def __save_data(self) -> None:
         #connect to database
         client = MongoClient('localhost')
         db = client['scans']
         collection = db['files']
 
-
-
+        #load the encryption key
         enc_key = self.__load_key()
+        if enc_key == None:
+            return None
+        enc = Fernet(enc_key)
 
         for engine in self.results:
             for res in engine[1]:
@@ -83,22 +86,44 @@ class Analysis():
                     'scanID': self.SCAN_ID,
                     'date': datetime.now().strftime("%d/%m/%Y"),
                     'hour': datetime.now().strftime("%H:%M:%S"),
-                    'engine': engine[0],
-                    'name': res['name'],
-                    'path': res['path'],
-                    'info': res['info']
+                    'engine': enc.encrypt(engine[0].encode()),
+                    'name': enc.encrypt(res['name'].encode()),
+                    'path': enc.encrypt(res['path'].encode()),
+                    'info': enc.encrypt(res['info'].encode()) if res['info'] != None else None
                 }
                 collection.insert_one(data)
 
     
-    def load_data(self) -> str: # <-- not private and wil always return the data in the database
-        pass
+    def load_data(self) -> str: # <-- not private and will always return the data in the database
+        client = MongoClient('localhost')
+        db = client['scans']
+        collection = db['files']
+
+        data = collection.find()
+
+        #load the encryption key
+        enc_key = self.__load_key()
+        if enc_key == None:
+            return None
+        enc = Fernet(enc_key)
+        
+
+        #make the string that will be sent to the gui side
+        msg = ''
+        for document in data:
+            for field in document:
+                if field in ['name', 'path', 'info', 'engine'] and document[field] is not None:
+                    document[field] = enc.decrypt(document[field].encode()).decode()
+                msg += f'{field}: {document[field]}\n'
+            msg += '\n'
+
+        return msg
 
 
     def disinfect(self, path, file_name):
         pass
 
-    def run_analysis(self):
+    def run_analysis(self) -> str:
         self.SCAN_ID += 1
         #set up the threads
         hashThread = threading.Thread(target=self.__scan_hash, args=(self.path,))
