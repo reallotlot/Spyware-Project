@@ -1,25 +1,26 @@
-QWidget#sidebar {
-    background-color: #2d8c48;
-    color: rgb(0, 0, 0);
-    font-family: Georgia, 'Times New Roman', Times, serif;
+#sidebar {
+    background-color: #166236;  /* Darker green background */
+    padding: 10px;
+    border-radius: 10px;
 }
 
-QPushButton#sidebar {
-    position: fixed;
-    top: 10%;
-    font-size: 20px;
-    background-color: #2d8c48;
-    border: none;
-    border-bottom: 1px solid black;
+QPushButton {
+    background-color: #28a745;  /* Lighter green button */
+    color: white;
+    border: 2px solid #145A32;  /* Add an outline with a slightly different color */
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-QPushButton#siderbar:hover {
-    background-color: #194f28;
+QPushButton:hover {
+    background-color: #1e8449;  /* Darker green on hover */
 }
 
-QLabel#sidebar {
-    text-align: center;
-    font-size: 25px;
-    border-bottom: 1px solid black;
-}
 
+QLabel {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}

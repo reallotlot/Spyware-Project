@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 
 #import the scrypt manager
-from Spyware_Manager import Manager
+from Spyware_Manager import manager
 
 
 #get stylesheet
@@ -14,71 +14,75 @@ def load_stylesheet(path):
         return file.read()
 
 
-#set up the side navigation bar
-def sidebar(window: QWidget):
-
-    # Sidebar widget
-    sidebar = QWidget(parent=window)
-    sidebar.setObjectName("sidebar")
-    sidebar.setFixedWidth(140)
-    sidebar.setFixedHeight(540)
-
-    # Sidebar logo
-    logo_label = QLabel("      SMR", parent=sidebar)
-    logo_label.setObjectName("sidebar")
-    logo_label.setGeometry(0,0,140,50)
-
-    # Sidebar menu items
-    items = ["home", "scans", "history", "settings"]
-    i = 50
-    for item in items:
-        item_button = QPushButton(item, objectName='sidebar',parent=sidebar)
-        item_button.setGeometry(0,i,140,50)
-        i += 50
-
+class MainWindow(QMainWindow):
+    #setup the main window
+    def __init__(self):
+        super().__init__()
+        
+        # Set up main window
+        self.setWindowTitle("Main Window")
+        self.setMinimumSize(960, 540)
+        
+        # Set maximum window size to 80% of screen size
+        screen = QScreen.availableGeometry(QApplication.primaryScreen())
+        self.setMaximumSize(int(screen.width() * 0.8), int(screen.height() * 0.8))
+        
+        # Create container widget for sidebar and main content
+        container_widget = QWidget()
+        self.setCentralWidget(container_widget)
+        
+        # Create main layout for container widget
+        container_layout = QGridLayout(container_widget)
+        # Set column stretch to ensure the sidebar remains at 20% width
+        container_layout.setColumnStretch(0, 1)
+        container_layout.setColumnStretch(1, 4)
+        
+        # Add sidebar
+        self.add_sidebar(container_layout)
+        
+        # Apply style sheet
+        self.setStyleSheet(load_stylesheet(f'{os.path.dirname(os.path.abspath(__file__))}\\Design\style.qss'))
 
         
 
 
 
-#set up the gui
-def main():
+    def add_sidebar(self, container_layout):
+         # Create sidebar widget
+        self.sidebar = QWidget()
+        self.sidebar.setObjectName("sidebar")  # Set object name for styling
+        sidebar_layout = QGridLayout(self.sidebar)
+        
+        # Sidebar content
+        sidebar_layout.addWidget(QLabel("Sidebar"), 0, 0)
+        sidebar_layout.addWidget(QPushButton("SCANS"), 1, 0)
+        sidebar_layout.addWidget(QPushButton("HISTORY"), 2, 0)
+        
+        # Set fixed size for sidebar
+        self.sidebar.setFixedWidth(int(self.width() * 0.2))
+        
+        # Set the grid formation
+        sidebar_layout.setRowStretch(0, 1)
+        sidebar_layout.setRowStretch(1, 1)
+        sidebar_layout.setRowStretch(2, 1)
+        sidebar_layout.setRowStretch(3, 7)
+        
+        # Add sidebar to container layout
+        container_layout.addWidget(self.sidebar, 0, 0)
+        
+        
+        
+        
+        
+def start():
+    
     app = QApplication(sys.argv)
-
-
-    #load stylesheet
-    style_path = f'{os.path.dirname(os.path.abspath(__file__))}\\Design\style.qss'
-    app.setStyleSheet(load_stylesheet(style_path))
-
-    win = QWidget()
-    win.setWindowTitle("SpywareDetection")
-    win.setFixedSize(960,540)
     
-    layout = QVBoxLayout()
-    win.setLayout(layout)
-
+    window = MainWindow()
+    window.show()
     
-    output = QLabel()
-    output.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-    output.setFont(QFont('Arial', 35))
-    output.setStyleSheet('color: black')
-    layout.addWidget(output)
-    
-
-    #add sidebar
-    sidebar(win)
-    
-    
-    #buttons functions
-    
-    
-
-    #open and close the window
-    win.show()
     sys.exit(app.exec())
     
-
-    
 if __name__ == "__main__":
-    main()
+    start()
     

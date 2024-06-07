@@ -100,7 +100,8 @@ class Analysis():
         collection = db['files']
 
         data = collection.find()
-
+        print(data)
+        
         #load the encryption key
         enc_key = self.__load_key()
         if enc_key == None:
@@ -113,14 +114,14 @@ class Analysis():
         for document in data:
             for field in document:
                 if field in ['name', 'path', 'info', 'engine'] and document[field] is not None:
-                    document[field] = enc.decrypt(document[field].encode()).decode()
+                    document[field] = enc.decrypt(document[field]).decode()
                 msg += f'{field}: {document[field]}\n'
             msg += '\n'
 
         return msg
 
 
-    def disinfect(self, path, file_name):
+    def __disinfect(self, path, file_name):
         pass
 
     def run_analysis(self) -> str:
