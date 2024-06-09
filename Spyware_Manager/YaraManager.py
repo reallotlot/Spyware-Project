@@ -45,7 +45,9 @@ def scan_yara(path):
             for file in (os.listdir(path)):
                 file_path = os.path.join(path, file)
                 if os.path.isdir(file_path):
-                    results = results.update(scan_yara(file_path))
+                    res = scan_yara(file_path)
+                    if res != []:
+                        results.append(res)
                 else:
                     matches = rules.match(file_path)
                     if matches != []:

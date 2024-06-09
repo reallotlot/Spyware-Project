@@ -19,8 +19,16 @@ QPushButton:hover {
 }
 
 
-QLabel {
-    color: white;
-    font-size: 24px;
-    margin-bottom: 20px;
+QLabel { 
+    color: #d1e7dd; /* Lighter text color */
+    font-size: 20px;  /* Reduced font size */
+    margin-bottom: 10px;  /* Reduced margin */
+    font-weight: bold;  /* Make the label text bold */
+    font-family: Arial, sans-serif;  /* Use Arial font family */
+}
+
+
+QPushButton#browse {
+    background-color: #d3d3d3;
+    color: black;
 }

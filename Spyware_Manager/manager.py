@@ -62,6 +62,7 @@ class Analysis():
                 curPath = file['path']
                 if curPath not in finalResult:
                     finalResult += f'Malicious file detected at {curPath}\n'
+                    finalResult += f'Info: \n    {file["info"]}\n    {res[0]}\n'
         if finalResult == '':
             return f"{self.path} is clear!"
         return finalResult
@@ -125,37 +126,36 @@ class Analysis():
         pass
 
     def run_analysis(self) -> str:
-        self.SCAN_ID += 1
-        #set up the threads
-        hashThread = threading.Thread(target=self.__scan_hash, args=(self.path,))
-        yaraThread = threading.Thread(target=self.__scan_yara, args=(self.path,))
-        hybridThread = threading.Thread(target=self.__scan_hybrid, args=(self.path,))
-        vtThread = threading.Thread(target=self.__virus_total, args=(self.path,))
-        threads = [hashThread, yaraThread, hybridThread, vtThread]
+        try:
+            self.SCAN_ID += 1
+            #set up the threads
+            hashThread = threading.Thread(target=self.__scan_hash, args=(self.path,))
+            yaraThread = threading.Thread(target=self.__scan_yara, args=(self.path,))
+            hybridThread = threading.Thread(target=self.__scan_hybrid, args=(self.path,))
+            vtThread = threading.Thread(target=self.__virus_total, args=(self.path,))
+            threads = [hashThread, yaraThread, hybridThread, vtThread]
 
-        #run the threads
-        print("starting the threads")
-        for thread in threads:
-            thread.start()
+            #run the threads
+            print("starting the threads")
+            for thread in threads:
+                thread.start()
 
-        print("waiting for the threads to finish")
-        #wait for threads to finish
-        for thread in threads:
-            thread.join()
-        print("all threads finished.")
+            print("waiting for the threads to finish")
+            #wait for threads to finish
+            for thread in threads:
+                thread.join()
+            print("all threads finished.")
 
-        #create a new list with only non-empty results
-        self.results = [res for res in self.results if res[1] != [] and res[1] is not None]
+            #create a new list with only non-empty results
+            self.results = [res for res in self.results if res[1] != [] and res[1] is not None]
 
-        #save scan data to database
-        self.__save_data()
+            #save scan data to database
+            self.__save_data()
 
-
-        
-
-        # print the results
-        
-        return self.__send_gui()
+            # print the results
+            return self.__send_gui()
+        except Exception as e:
+            return e
 
 
 

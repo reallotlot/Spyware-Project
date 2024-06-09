@@ -1,12 +1,12 @@
 from Spyware_Manager import manager
 
 
-analyze = manager.Analysis(r'malware')
+analyze = manager.Analysis(r'C:\Users\lotan\dir')
 
-#for i in range(1):
-#    result = analyze.run_analysis()
-#    print(result)
-
+for i in range(1):
+    result = analyze.run_analysis()
+    print(result)
+    
 #print(analyze.load_data())
 
 #try:
