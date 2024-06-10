@@ -56,7 +56,9 @@ def hash_scan_dir(path):
         for file in os.listdir(path):
             file_path = os.path.join(path, file)
             if os.path.isdir(file_path):
-                hash_scan_dir(file_path)
+                res = hash_scan_dir(file_path)
+                if res != []:
+                    results.extend(res)
             else:
                 result = hash_scan_file(file_path)
                 if result:

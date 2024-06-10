@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 
 #import the scrypt manager
-from Spyware_Manager import manager
+from Spyware_Manager.manager import Analysis
 
 
 #get stylesheet
@@ -18,6 +18,9 @@ class MainWindow(QMainWindow):
     #setup the main window
     def __init__(self):
         super().__init__()
+        
+        # Set up the analysis manager
+        self.analysis = Analysis()
         
         # Set up main window
         self.setWindowTitle("Main Window")
@@ -147,11 +150,26 @@ class MainWindow(QMainWindow):
     #history page
     def make_history(self):
         page = QWidget()
+
+        # Create layout for the page
         layout = QVBoxLayout(page)
-        label = QLabel()
-        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(label)
+
+        # Create top bar with page name
+        top_bar_layout = QHBoxLayout()
+        page_name_label = QLabel("History")
+        page_name_label.setFixedHeight(50)
+        top_bar_layout.addWidget(page_name_label)
+        top_bar_layout.addStretch(1)  # Add stretch to push line edit and button to the right
+        layout.addLayout(top_bar_layout)
+
+        # Create table for displaying history
+        self.history_table = QTableWidget()
+        layout.addWidget(self.history_table)
+
         return page
+
+    
+
     
     
     #BUTTONS FUNCTIONS
@@ -161,6 +179,7 @@ class MainWindow(QMainWindow):
         self.scans.show()
         self.history.hide()
     def show_history(self):
+        self.update_table(self.history_table)
         self.scans.hide()
         self.history.show()
         
@@ -172,11 +191,30 @@ class MainWindow(QMainWindow):
         if not os.path.exists(path):
             label.setText("Path doesnt exist please put a valid one")
         else:
-            analyze = manager.Analysis(path)
-            results = analyze.run_analysis()
+            results = self.analysis.run_analysis(path)
             label.setText(results)
         
+    
+    def update_table(self, history_table: QTableWidget):
+        data_list = self.analysis.load_data()
+        if not data_list:
+            history_table.setRowCount(0)
+            history_table.setColumnCount(1)
+            history_table.setHorizontalHeaderLabels(['No data found'])
+            return 
 
+        headers = list(data_list[0].keys())
+        history_table.setColumnCount(len(headers))
+        history_table.setHorizontalHeaderLabels(headers)
+        
+        history_table.setRowCount(len(data_list))
+        for row, data in enumerate(data_list):
+            for col, key in enumerate(headers):
+                item = QTableWidgetItem(str(data[key]))
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)  # Make item read-only
+                history_table.setItem(row, col, item)
+        history_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        
         
 def start():
     
