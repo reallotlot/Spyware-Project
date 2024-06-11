@@ -6,7 +6,7 @@ import shutil
 # Important variables
 VBOXMANAGE = r'C:\Program Files\Oracle\VirtualBox\VBOXMANAGE'
 VBOXNAME = "sandbox"
-SHARED = r'C:\Users\lotan\project\Spyware-Project\Spyware_Manager\dynamic'
+SHARED = r'C:\Users\lotan\project\Spyware-Project\Spyware_Manager\sandbox\shared'
 
 def copy_malware(path):
     if not os.path.exists(os.path.join(SHARED, os.path.basename(path))):
@@ -25,7 +25,7 @@ def start_vm():
     
     
 def execute_malware(file_name):
-    guest_path = f'\\\\VBoxSvr\\dynamic\\{file_name}'
+    guest_path = f'\\\\VBoxSvr\\sandbox\\shared\\{file_name}'
     print("executing malware")
     
     session_info = subprocess.Popen([VBOXMANAGE, "guestcontrol", VBOXNAME, "run", "--username", "Administrator", "--password", "1234", "--exe", guest_path, "--verbose"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -34,7 +34,13 @@ def execute_malware(file_name):
 
 
 def make_memory_dump():
-    pass
+    dump_file = r'C:\Users\lotan\project\Spyware-Project\Spyware_Manager\sandbox\dump.raw'
+    if os.path.exists(dump_file):
+        os.remove(dump_file)
+        print(f"Existing dump file {dump_file} removed.")
+    
+    subprocess.run(["VBoxManage", "debugvm", VBOXNAME, "dumpvmcore", "--filename", dump_file], check=True)
+    print(f"Memory dumped to {dump_file}")
     
 def stop_running():
     subprocess.run([VBOXMANAGE, "controlvm", VBOXNAME, "poweroff"], check=True)
@@ -70,6 +76,7 @@ def scan_file(path):
         # Wait for 30 seconds before taking the memory dump
         execute_malware(file_name)
         time.sleep(30)
+        make_memory_dump()
     
     finally:
         try:
