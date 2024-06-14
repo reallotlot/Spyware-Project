@@ -25,10 +25,8 @@ class Analysis():
             
 
     def __scan_sandbox(self, path):
-        res = LocalSandbox.scan_dir(path)
-        with self.lock:
-            self.results.append(('SandboxAnalysis', res))
-        return res
+        LocalSandbox.scan_dir(path)
+        
     
 
     def __scan_hash(self, path):
@@ -163,7 +161,6 @@ class Analysis():
             for thread in threads:
                 thread.join()
             print("all threads finished.")
-            print(self.results)
             
             #create a new list with only non-empty results
             self.results = [res for res in self.results if res[1] != [] and res[1] is not None]

@@ -135,7 +135,7 @@ def scan_dir(path):
         for file in os.listdir(path):
             file_path = os.path.join(path,file)
             if os.path.isdir(file_path):
-                results += scan_dir(file_path)
+                results.extend(scan_dir(file_path))
             else:
                 res = scan_file(file_path, file)
                 if res is not None:

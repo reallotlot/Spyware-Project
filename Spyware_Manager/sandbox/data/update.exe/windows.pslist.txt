@@ -1,0 +1,105 @@
+Output for plugin: windows.pslist
+----------------------------------------
+Volatility 3 Framework 2.7.1
+
+PID	PPID	ImageFileName	Offset(V)	Threads	Handles	SessionId	Wow64	CreateTime	ExitTime	File output
+
+4	0	System	0xc98307e99080	130	-	N/A	False	2024-06-11 11:11:25.000000 	N/A	Disabled
+92	4	Registry	0xc98307fb7040	4	-	N/A	False	2024-06-11 11:11:24.000000 	N/A	Disabled
+336	4	smss.exe	0xc9830870f040	2	-	N/A	False	2024-06-11 11:11:25.000000 	N/A	Disabled
+448	436	csrss.exe	0xc98309fa2140	11	-	0	False	2024-06-11 11:11:28.000000 	N/A	Disabled
+524	436	wininit.exe	0xc9830e98e080	1	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+532	516	csrss.exe	0xc9830e993140	13	-	1	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+604	516	winlogon.exe	0xc9830e915080	3	-	1	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+660	524	services.exe	0xc9830e9d40c0	12	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+668	524	lsass.exe	0xc9830e9d7080	9	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+776	660	svchost.exe	0xc9830f47b240	22	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+792	604	fontdrvhost.ex	0xc9830f47c080	5	-	1	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+800	524	fontdrvhost.ex	0xc9830f47e140	5	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+900	660	svchost.exe	0xc9830f4cf2c0	11	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1012	604	dwm.exe	0xc9830f3da080	17	-	1	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+724	660	svchost.exe	0xc9830f550240	83	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+736	660	svchost.exe	0xc9830f55b2c0	14	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+656	660	svchost.exe	0xc9830f55d2c0	20	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1116	660	svchost.exe	0xc983082b5080	17	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1152	660	svchost.exe	0xc9830e87f2c0	33	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1284	660	svchost.exe	0xc9830f5eb2c0	27	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1432	660	VBoxService.ex	0xc98307e740c0	11	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1560	4	MemCompression	0xc9830f60f040	58	-	N/A	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1692	660	svchost.exe	0xc98307e61080	11	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1756	660	svchost.exe	0xc9830f63b240	6	-	0	False	2024-06-11 11:11:29.000000 	N/A	Disabled
+1808	660	svchost.exe	0xc9830f6cb2c0	5	-	0	False	2024-06-11 11:11:30.000000 	N/A	Disabled
+1816	660	svchost.exe	0xc9830f6d32c0	16	-	0	False	2024-06-11 11:11:30.000000 	N/A	Disabled
+1904	660	spoolsv.exe	0xc9830f7a3200	9	-	0	False	2024-06-11 11:11:30.000000 	N/A	Disabled
+1960	660	svchost.exe	0xc9830f7b82c0	16	-	0	False	2024-06-11 11:11:30.000000 	N/A	Disabled
+1484	660	svchost.exe	0xc9830f886240	14	-	0	False	2024-06-11 11:11:30.000000 	N/A	Disabled
+2068	660	wlms.exe	0xc9830f90c240	2	-	0	False	2024-06-11 11:11:30.000000 	N/A	Disabled
+2076	660	MsMpEng.exe	0xc9830f90f280	0	-	0	False	2024-06-11 11:11:30.000000 	2024-06-11 11:25:52.000000 	Disabled
+2416	660	svchost.exe	0xc9830fb232c0	6	-	0	False	2024-06-11 11:11:31.000000 	N/A	Disabled
+2840	724	sihost.exe	0xc9830fce2240	12	-	1	False	2024-06-11 11:11:32.000000 	N/A	Disabled
+2852	660	svchost.exe	0xc9830fcdf0c0	15	-	1	False	2024-06-11 11:11:32.000000 	N/A	Disabled
+2916	724	MicrosoftEdgeU	0xc9830fd28300	4	-	0	True	2024-06-11 11:11:32.000000 	N/A	Disabled
+2976	724	taskhostw.exe	0xc9830fe4b300	8	-	1	False	2024-06-11 11:11:32.000000 	N/A	Disabled
+452	1116	ctfmon.exe	0xc9830fea3080	10	-	1	False	2024-06-11 11:11:32.000000 	N/A	Disabled
+2036	604	userinit.exe	0xc9830ff3a080	0	-	1	False	2024-06-11 11:11:32.000000 	2024-06-11 11:11:59.000000 	Disabled
+3028	2036	explorer.exe	0xc9830ff3d080	62	-	1	False	2024-06-11 11:11:32.000000 	N/A	Disabled
+3564	660	svchost.exe	0xc9830fdb3300	8	-	1	False	2024-06-11 11:11:34.000000 	N/A	Disabled
+3968	776	StartMenuExper	0xc9830faa6080	9	-	1	False	2024-06-11 11:11:35.000000 	N/A	Disabled
+3192	776	RuntimeBroker.	0xc983102f4300	3	-	1	False	2024-06-11 11:11:35.000000 	N/A	Disabled
+3288	776	SearchApp.exe	0xc98310407080	59	-	1	False	2024-06-11 11:11:35.000000 	N/A	Disabled
+4232	776	RuntimeBroker.	0xc983104e1300	11	-	1	False	2024-06-11 11:11:35.000000 	N/A	Disabled
+4308	660	SearchIndexer.	0xc9831051f240	19	-	0	False	2024-06-11 11:11:35.000000 	N/A	Disabled
+4724	660	svchost.exe	0xc983106f1240	3	-	0	False	2024-06-11 11:11:36.000000 	N/A	Disabled
+2260	776	RuntimeBroker.	0xc9831090f300	5	-	1	False	2024-06-11 11:11:40.000000 	N/A	Disabled
+5096	3028	SecurityHealth	0xc983105b5080	3	-	1	False	2024-06-11 11:11:48.000000 	N/A	Disabled
+4776	660	SecurityHealth	0xc983106f0080	12	-	0	False	2024-06-11 11:11:48.000000 	N/A	Disabled
+5160	3028	VBoxTray.exe	0xc98308c4e080	13	-	1	False	2024-06-11 11:11:48.000000 	N/A	Disabled
+5236	3028	msedge.exe	0xc98308ffa080	0	-	1	False	2024-06-11 11:11:49.000000 	2024-06-11 11:22:46.000000 	Disabled
+2652	776	SearchApp.exe	0xc9830f9da080	25	-	1	False	2024-06-11 11:12:14.000000 	N/A	Disabled
+4916	776	SkypeApp.exe	0xc98308b82080	44	-	1	False	2024-06-11 11:12:16.000000 	N/A	Disabled
+4560	776	RuntimeBroker.	0xc98309eec300	2	-	1	False	2024-06-11 11:12:16.000000 	N/A	Disabled
+5100	660	svchost.exe	0xc9830933c340	3	-	0	False	2024-06-11 11:12:22.000000 	N/A	Disabled
+6316	776	RuntimeBroker.	0xc9831050e300	2	-	1	False	2024-06-11 11:12:26.000000 	N/A	Disabled
+6424	776	ApplicationFra	0xc98309be3080	6	-	1	False	2024-06-11 11:12:27.000000 	N/A	Disabled
+6456	776	WWAHost.exe	0xc98309be4080	26	-	1	False	2024-06-11 11:12:27.000000 	N/A	Disabled
+6776	776	dllhost.exe	0xc98310cb4340	7	-	1	False	2024-06-11 11:12:28.000000 	N/A	Disabled
+6208	776	WinStore.App.e	0xc98310463080	11	-	1	False	2024-06-11 11:12:38.000000 	N/A	Disabled
+4116	776	RuntimeBroker.	0xc98310c38340	2	-	1	False	2024-06-11 11:12:39.000000 	N/A	Disabled
+6360	660	svchost.exe	0xc98308c64080	9	-	0	False	2024-06-11 11:12:46.000000 	N/A	Disabled
+368	660	SgrmBroker.exe	0xc9831062c080	7	-	0	False	2024-06-11 11:13:36.000000 	N/A	Disabled
+6932	660	svchost.exe	0xc9830fa77300	8	-	0	False	2024-06-11 11:13:36.000000 	N/A	Disabled
+680	776	TextInputHost.	0xc983102f5080	9	-	1	False	2024-06-11 11:14:06.000000 	N/A	Disabled
+4472	776	ShellExperienc	0xc98308bee340	11	-	1	False	2024-06-11 11:22:37.000000 	N/A	Disabled
+6348	776	RuntimeBroker.	0xc98310844080	5	-	1	False	2024-06-11 11:22:37.000000 	N/A	Disabled
+2440	1692	audiodg.exe	0xc98308c59080	4	-	0	False	2024-06-11 11:22:50.000000 	N/A	Disabled
+5936	660	svchost.exe	0xc983089cc080	4	-	0	False	2024-06-11 11:25:04.000000 	N/A	Disabled
+3980	660	svchost.exe	0xc98308c58080	15	-	0	False	2024-06-11 11:25:51.000000 	N/A	Disabled
+520	660	svchost.exe	0xc983089d2080	5	-	0	False	2024-06-11 11:26:19.000000 	N/A	Disabled
+4932	776	MoUsoCoreWorke	0xc9830e899080	11	-	0	False	2024-06-14 09:38:34.000000 	N/A	Disabled
+2196	776	WmiPrvSE.exe	0xc98309ae9280	5	-	0	False	2024-06-14 09:38:34.000000 	N/A	Disabled
+5316	660	svchost.exe	0xc98311496080	6	-	0	False	2024-06-14 09:38:37.000000 	N/A	Disabled
+6000	660	svchost.exe	0xc983116632c0	5	-	0	False	2024-06-14 09:38:45.000000 	N/A	Disabled
+7868	776	SkypeBackgroun	0xc9830f608080	4	-	1	False	2024-06-14 09:39:02.000000 	N/A	Disabled
+3764	7788	OneDrive.exe	0xc98311440080	28	-	1	False	2024-06-14 09:39:52.000000 	N/A	Disabled
+8336	7788	Microsoft.Shar	0xc98309b46080	14	-	1	False	2024-06-14 09:39:54.000000 	N/A	Disabled
+3824	8624	msedge.exe	0xc983104f4080	0	-	1	False	2024-06-14 09:43:06.000000 	2024-06-14 09:44:50.000000 	Disabled
+3948	3824	msedge.exe	0xc9830faab080	0	-	1	False	2024-06-14 09:43:26.000000 	2024-06-14 09:44:50.000000 	Disabled
+5844	3824	msedge.exe	0xc98311c570c0	0	-	1	False	2024-06-14 09:43:34.000000 	2024-06-14 09:44:50.000000 	Disabled
+1092	724	taskhostw.exe	0xc9831155c080	8	-	1	False	2024-06-14 09:43:45.000000 	N/A	Disabled
+6512	776	WmiPrvSE.exe	0xc98308b70080	7	-	0	False	2024-06-14 09:44:12.000000 	N/A	Disabled
+4828	3824	msedge.exe	0xc98311463080	46	-	1	False	2024-06-14 09:44:50.000000 	N/A	Disabled
+3344	4828	msedge.exe	0xc98309e3c080	8	-	1	False	2024-06-14 09:44:50.000000 	N/A	Disabled
+6072	4828	msedge.exe	0xc983105bd080	15	-	1	False	2024-06-14 09:44:50.000000 	N/A	Disabled
+7236	4828	msedge.exe	0xc983111c7080	15	-	1	False	2024-06-14 09:44:50.000000 	N/A	Disabled
+8548	4828	msedge.exe	0xc9830f820080	9	-	1	False	2024-06-14 09:44:50.000000 	N/A	Disabled
+8608	724	taskhostw.exe	0xc98309aa4080	6	-	1	False	2024-06-14 13:35:28.000000 	N/A	Disabled
+2024	724	OneDriveStanda	0xc9830f524080	10	-	1	False	2024-06-14 13:35:28.000000 	N/A	Disabled
+2264	660	TrustedInstall	0xc98309339080	9	-	0	False	2024-06-14 13:35:28.000000 	N/A	Disabled
+8040	776	TiWorker.exe	0xc98310c2d080	7	-	0	False	2024-06-14 13:35:28.000000 	N/A	Disabled
+4180	776	backgroundTask	0xc9830f6020c0	13	-	1	False	2024-06-14 13:35:28.000000 	N/A	Disabled
+8748	776	backgroundTask	0xc98311b44080	14	-	1	False	2024-06-14 13:35:28.000000 	N/A	Disabled
+3640	724	LocationNotifi	0xc983108b62c0	2	-	1	False	2024-06-14 13:35:29.000000 	N/A	Disabled
+2468	4736	conhost.exe	0xc9831100e340	0	-	0	False	2024-06-14 13:35:51.000000 	2024-06-14 13:36:13.000000 	Disabled
+8388	772	update.exe	0xc9830f5ac2c0	0	-	0	False	2024-06-14 13:35:52.000000 	2024-06-14 13:36:13.000000 	Disabled
+
+----------------------------------------

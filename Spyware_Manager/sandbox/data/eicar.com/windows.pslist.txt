@@ -1,0 +1,48 @@
+Output for plugin: windows.pslist
+----------------------------------------
+Volatility 3 Framework 2.7.1
+
+PID	PPID	ImageFileName	Offset(V)	Threads	Handles	SessionId	Wow64	CreateTime	ExitTime	File output
+
+4	0	System	0xa901c3a62040	104	-	N/A	False	2024-06-14 14:00:52.000000 	N/A	Disabled
+92	4	Registry	0xa901c3bb7040	4	-	N/A	False	2024-06-14 14:00:48.000000 	N/A	Disabled
+320	4	smss.exe	0xa901c4663040	3	-	N/A	False	2024-06-14 14:00:52.000000 	N/A	Disabled
+416	404	csrss.exe	0xa901c9d88080	13	-	0	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+496	404	wininit.exe	0xa901c9c78080	8	-	0	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+504	488	csrss.exe	0xa901c4308080	15	-	1	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+592	488	winlogon.exe	0xa901c9c92080	7	-	1	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+636	496	services.exe	0xa901c9c70080	11	-	0	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+644	496	lsass.exe	0xa901c9cca0c0	13	-	0	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+744	636	svchost.exe	0xa901ca63f240	16	-	0	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+760	592	fontdrvhost.ex	0xa901ca656140	7	-	1	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+768	496	fontdrvhost.ex	0xa901ca642080	7	-	0	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+876	636	svchost.exe	0xa901ca6e62c0	13	-	0	False	2024-06-14 14:00:54.000000 	N/A	Disabled
+972	592	LogonUI.exe	0xa901c9b39080	27	-	1	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+980	592	dwm.exe	0xa901c9b3b080	22	-	1	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+456	636	svchost.exe	0xa901c9bda240	56	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+420	636	svchost.exe	0xa901c9beb2c0	19	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+508	636	svchost.exe	0xa901c9be92c0	18	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1072	636	svchost.exe	0xa901c9e51280	16	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1140	636	svchost.exe	0xa901c9e862c0	24	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1260	636	svchost.exe	0xa901c9ec4300	22	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1368	636	svchost.exe	0xa901ca748240	7	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1428	636	VBoxService.ex	0xa901ca7460c0	11	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1564	4	MemCompression	0xa901c3a74080	6	-	N/A	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1576	636	svchost.exe	0xa901ca74c2c0	7	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1696	636	svchost.exe	0xa901c9cb02c0	12	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1780	636	svchost.exe	0xa901ca7ca240	8	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1792	636	svchost.exe	0xa901ca7cd2c0	6	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1800	636	svchost.exe	0xa901ca7ce080	21	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1892	636	spoolsv.exe	0xa901c9fa5200	8	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1916	636	svchost.exe	0xa901c9fac2c0	14	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1928	636	svchost.exe	0xa901c9fae2c0	18	-	0	False	2024-06-14 14:00:55.000000 	N/A	Disabled
+1560	636	svchost.exe	0xa901cae6e080	7	-	0	False	2024-06-14 14:00:56.000000 	N/A	Disabled
+2080	636	svchost.exe	0xa901cae88300	12	-	0	False	2024-06-14 14:00:56.000000 	N/A	Disabled
+2184	636	wlms.exe	0xa901caf0d240	4	-	0	False	2024-06-14 14:00:56.000000 	N/A	Disabled
+2328	636	sppsvc.exe	0xa901caf43080	8	-	0	False	2024-06-14 14:00:56.000000 	N/A	Disabled
+2408	636	svchost.exe	0xa901cafbc240	30	-	0	False	2024-06-14 14:00:56.000000 	N/A	Disabled
+2500	744	WmiPrvSE.exe	0xa901cb0782c0	12	-	0	False	2024-06-14 14:00:57.000000 	N/A	Disabled
+2840	636	svchost.exe	0xa901cb2782c0	14	-	0	False	2024-06-14 14:00:57.000000 	N/A	Disabled
+3068	3060	conhost.exe	0xa901cb326240	0	-	0	False	2024-06-14 14:01:17.000000 	2024-06-14 14:01:17.000000 	Disabled
+
+----------------------------------------

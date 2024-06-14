@@ -1,0 +1,8 @@
+Output for plugin: windows.malfind
+----------------------------------------
+Volatility 3 Framework 2.7.1
+
+PID	Process	Start VPN	End VPN	Tag	Protection	CommitCharge	PrivateMemory	File output	Notes	Hexdump	Disasm
+
+
+----------------------------------------

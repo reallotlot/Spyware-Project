@@ -25,10 +25,9 @@ def compile_rulemaster_rules():
 def comp():
     if os.path.exists(compiled_rules_path):
         if os.listdir(compiled_rules_path) != []:
-            pass#print("already compiled")
+            pass
     else:
         compile_rulemaster_rules()
-        #print("done")
 
 
 
