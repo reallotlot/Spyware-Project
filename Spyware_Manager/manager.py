@@ -1,4 +1,4 @@
-from . import HashManager ,YaraManager ,HybridManager ,VirusTotal, Disinfection, StringsManager
+from . import HashManager ,YaraManager ,HybridManager ,VirusTotal, Disinfection, StringsManager, LocalSandbox
 import os
 import threading
 from datetime import datetime
@@ -24,6 +24,12 @@ class Analysis():
         return key
             
 
+    def __scan_sandbox(self, path):
+        res = LocalSandbox.scan_dir(path)
+        with self.lock:
+            self.results.append(('SandboxAnalysis', res))
+        return res
+    
 
     def __scan_hash(self, path):
         res = HashManager.hash_scan_dir(path)
@@ -31,7 +37,6 @@ class Analysis():
             self.results.append(('HashScan', res))
         return res
         
-
 
     def __scan_yara(self, path):
         res = YaraManager.scan_yara(path)
@@ -68,6 +73,7 @@ class Analysis():
                 if curPath not in finalResult:
                     finalResult += f'Malicious file detected at {curPath}\n'
                     finalResult += f'Info: \n    {file["info"]}\n    {res[0]}\n\n'
+                    print(finalResult)
         if finalResult == '':
             return f"The file is clear!"
         return finalResult
@@ -141,7 +147,11 @@ class Analysis():
             hybridThread = threading.Thread(target=self.__scan_hybrid, args=(path,))
             vtThread = threading.Thread(target=self.__virus_total, args=(path,))
             strThread = threading.Thread(target=self.__scan_string, args=(path,))
-            threads = [hashThread, yaraThread, hybridThread, vtThread, strThread]
+            sandboxThread = threading.Thread(target=self.__scan_sandbox, args=(path,))
+            threads = [
+                sandboxThread, hashThread, yaraThread,
+                hybridThread, vtThread, strThread
+            ]
 
             #run the threads
             print("starting the threads")
@@ -153,7 +163,8 @@ class Analysis():
             for thread in threads:
                 thread.join()
             print("all threads finished.")
-
+            print(self.results)
+            
             #create a new list with only non-empty results
             self.results = [res for res in self.results if res[1] != [] and res[1] is not None]
 

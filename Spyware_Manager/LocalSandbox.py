@@ -3,6 +3,8 @@ import subprocess
 import time
 import shutil
 
+from .sandbox.Volatility import run_analysis
+
 # Important variables
 VBOXMANAGE = r'C:\Program Files\Oracle\VirtualBox\VBOXMANAGE'
 VBOXNAME = "sandbox"
@@ -37,7 +39,6 @@ def make_memory_dump():
     dump_file = r'C:\Users\lotan\project\Spyware-Project\Spyware_Manager\sandbox\dump.raw'
     if os.path.exists(dump_file):
         os.remove(dump_file)
-        print(f"Existing dump file {dump_file} removed.")
     
     subprocess.run(["VBoxManage", "debugvm", VBOXNAME, "dumpvmcore", "--filename", dump_file], check=True)
     print(f"Memory dumped to {dump_file}")
@@ -85,6 +86,37 @@ def scan_file(path):
             restore_snapshot()
         except Exception as e:
             print(e)
+            
+    
+    # Analyze with volatility
+    malicious, info = run_analysis()
+    
+    results = {
+        'name': file_name,
+        'path': path,
+        'info': f'{info}'
+    }
+    if malicious:
+        return results
+
+
+def scan_dir(path):
+    results = []
+    if not os.path.isdir(path):
+        res = scan_file(path)
+        if res != []:
+            results.append(res)
+    else:
+        for file in os.listdir(path):
+            file_path = os.path.join(path, file)
+            if os.path.isdir(file_path):
+                results.extend(scan_dir(file_path))
+            else:
+                res = scan_file(file_path)
+                if res != []:
+                    results.append(res)
+    
+    return results
 
 if __name__ == "__main__":
-    scan_file(r'C:\Users\lotan\project\Spyware-Project\malware\AutoClicker.exe')
+    pass
