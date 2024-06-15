@@ -56,4 +56,5 @@ def run_all_plugins(file_name):
             file.write(formatted_output)
 
 if __name__ == '__main__':
+    #run_all_plugins('Flasher.exe')
     pass

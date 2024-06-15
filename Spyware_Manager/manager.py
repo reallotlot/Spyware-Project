@@ -136,7 +136,7 @@ class Analysis():
     def __disinfect(self, path, file_name):
         pass
 
-    def run_analysis(self, path) -> str:
+    def run_analysis(self, path, local_sandbox: bool) -> str:
         try:
             self.SCAN_ID += 1
             #set up the threads
@@ -145,11 +145,17 @@ class Analysis():
             hybridThread = threading.Thread(target=self.__scan_hybrid, args=(path,))
             vtThread = threading.Thread(target=self.__virus_total, args=(path,))
             strThread = threading.Thread(target=self.__scan_string, args=(path,))
-            sandboxThread = threading.Thread(target=self.__scan_sandbox, args=(path,))
+            
             threads = [
-                sandboxThread, hashThread, yaraThread,
+                hashThread, yaraThread,
                 hybridThread, vtThread, strThread
             ]
+
+            # Add sandboxThread only if local_sandbox is True
+            if local_sandbox:
+                sandboxThread = threading.Thread(target=self.__scan_sandbox, args=(path,))
+                threads.append(sandboxThread)
+
 
             #run the threads
             print("starting the threads")

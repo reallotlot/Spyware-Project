@@ -1,5 +1,6 @@
 # THIS FILE WILL HANDLE THE GUI
 import sys,os
+import threading
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -125,10 +126,19 @@ class MainWindow(QMainWindow):
         browse_layout.addWidget(browse_button)
         layout.addLayout(browse_layout)
 
+        # Create horizontal layout for scan button and checkbox
+        scan_checkbox_layout = QHBoxLayout()
+
         # Create scan button
         scan_button = QPushButton("Scan")
         scan_button.setFixedWidth(150)  # Make the scan button smaller
-        layout.addWidget(scan_button)
+        scan_checkbox_layout.addWidget(scan_button)
+
+        # Create checkbox to save local sandbox data
+        save_checkbox = QCheckBox("Save Local Sandbox Data")
+        scan_checkbox_layout.addWidget(save_checkbox)
+
+        layout.addLayout(scan_checkbox_layout)
 
         # Create text edit to display scan result
         scan_result_text_edit = QTextEdit()
@@ -143,7 +153,7 @@ class MainWindow(QMainWindow):
 
         # Connect functions
         browse_button.clicked.connect(browse)
-        scan_button.clicked.connect(lambda: self.scan_func(path_line_edit.text(), scan_result_text_edit))
+        scan_button.clicked.connect(lambda: self.scan_func(path_line_edit.text(), scan_result_text_edit, save_checkbox.isChecked()))
 
         return page
     
@@ -183,16 +193,17 @@ class MainWindow(QMainWindow):
         self.scans.hide()
         self.history.show()
         
-    def scan_func(self,path, label: QLabel) -> None:
+    def scan_func(self,path, label: QLabel, sandbox) -> None:
         label.setText("Loading...")
         
-        
+        print(sandbox)
         #check path
         if not os.path.exists(path):
             label.setText("Path doesnt exist please put a valid one")
         else:
-            results = self.analysis.run_analysis(path)
+            results = self.analysis.run_analysis(path, sandbox)
             label.setText(results)
+
         
     
     def update_table(self, history_table: QTableWidget):

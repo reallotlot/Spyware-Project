@@ -1,13 +1,14 @@
 import os
 import subprocess
+import threading
 import time
 import shutil
 
-from sandbox import Volatility  
+from .sandbox import Volatility  
 
 # Important variables
 VBOXMANAGE = r'C:\Program Files\Oracle\VirtualBox\VBOXMANAGE.exe'
-VBOXNAME = "sandbox"
+VBOXNAME = "win7"
 SHARED = r'C:\Users\lotan\project\Spyware-Project\Spyware_Manager\sandbox\shared'
 
 def copy_malware(path):
@@ -31,13 +32,19 @@ def execute_malware(file_name):
     print("Executing malware")
 
     try:
-        subprocess.run([
+        process = subprocess.Popen([
             VBOXMANAGE, "guestcontrol", VBOXNAME, "run",
-            "--username", "sandbox", "--password", "1234",
-            "--exe", f"{guest_path}",
-            "--verbose"
-        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        print(f"Malware executed successfully.")
+            "--exe", guest_path, "--username", "sandbox", "--password", "1234",
+            "--verbose"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(30)
+        try:
+            stdout, stderr = process.communicate(timeout=60)
+            print(f"file executed")
+        except subprocess.TimeoutExpired:
+            process.terminate()
+            print(f"file execution timed out")
+        
+        
     except subprocess.CalledProcessError as e:
         print(f"Error executing file {guest_path} on VM {VBOXNAME}: {e}")
 
@@ -81,15 +88,12 @@ def scan_file(path):
     file_name = os.path.basename(path)
     print(f"Scanning file: {file_name}")
 
-    # Start the sandbox and give it some time to load up
     try:
         copy_malware(path)
         start_vm()
-        time.sleep(30)  # Adjust this delay as needed
-
-        # Wait for malware execution
+        time.sleep(10)
         execute_malware(file_name)
-        # Make memory dump after execution
+        time.sleep(30)
         make_memory_dump()
     finally:
         try:
@@ -100,7 +104,7 @@ def scan_file(path):
 
         delete_malware(file_name)
 
-    # Analyze with volatility after all operations are complete
+    # Analyze with volatility
     Volatility.run_all_plugins(file_name)
 
 
@@ -114,4 +118,4 @@ def scan_dir(path):
                 scan_file(file_path)
 
 if __name__ == "__main__":
-    scan_dir(r'C:\Users\lotan\project\Spyware-Project\malware')
+    scan_dir(r'C:\Users\lotan\project\Spyware-Project\malware\eicar.com')
