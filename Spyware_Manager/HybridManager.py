@@ -8,14 +8,6 @@ import platform
 from cryptography import fernet
 
 
-# load the encrypted api key
-def load_key():
-    enc_key = os.getenv("API_ENCRYPTION_KEY")
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'api_keys.txt')
-    with open(path, "rb") as file:
-        api_key = file.read().split(b"\n")[1]
-        
-    return fernet.Fernet(enc_key).decrypt(api_key).decode()
 
 
 def get_win_ver():
@@ -56,9 +48,8 @@ def scan_file(path, file_name):
         return None #file is not executable
          
     
-    api_key = load_key()
+    api_key = 'mpdfmk1ua7d7a8aevv0az9ahf16bb4d256dkubbq567721e7lx578w28c86e01a0'
     api_endpoint = r'https://www.hybrid-analysis.com/api/v2/submit/file'
-     
          
     #set up the data for the sandbox analysis
     payload = {
@@ -76,7 +67,6 @@ def scan_file(path, file_name):
     # Submit the file for analysis in the sandbox
     response = requests.post(api_endpoint, headers=headers, files=files, data=payload)
     analysis_id = ''
-
     if response.status_code == 201:
         analysis_result = response.json()
         analysis_id = analysis_result.get('job_id')

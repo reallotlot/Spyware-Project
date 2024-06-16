@@ -5,23 +5,11 @@ import os
 
 from cryptography import fernet
 
-
-
-
-#LOAD ENCRYPTED API KEY
-def load_key():
-    enc_key = os.getenv("API_ENCRYPTION_KEY")
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'api_keys.txt')
-    with open(path, "rb") as file:
-        api_key = file.read().split(b"\n")[0]
-        
-    return fernet.Fernet(enc_key).decrypt(api_key).decode()
-
    
     
 def scan_file(path):
-    api_key = load_key()
-    
+    api_key = '390d84de22c52785ecabaa956966b4aedba5a793c41e65c53543baea26c2c1b3'
+
     #trusted vendors
     trusted_vendors = ['google', 'avast', 'avg', 'kaspersky', 'malwarebytes', 'microsoft', 'bitdefender']
 
@@ -108,4 +96,4 @@ def scan_dir(path):
     
     
 if __name__ == "__main__":
-    pass
+    print(scan_dir(r'C:\Users\lotan\project\Spyware-Project\malware\Flasher.exe'))
