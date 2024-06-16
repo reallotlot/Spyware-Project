@@ -17,5 +17,10 @@
     "vbs",
     "shellcode",
     "obfuscation",
-    "encryption"
+    "encryption",
+    "decryption",
+    "decryptor",
+    "flasher",
+    "sys32",
+    "system32"
 ]

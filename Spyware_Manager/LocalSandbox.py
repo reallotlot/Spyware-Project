@@ -8,7 +8,7 @@ from .sandbox import Volatility
 
 # Important variables
 VBOXMANAGE = r'C:\Program Files\Oracle\VirtualBox\VBOXMANAGE.exe'
-VBOXNAME = "win7"
+VBOXNAME = "win10"
 SHARED = r'C:\Users\lotan\project\Spyware-Project\Spyware_Manager\sandbox\shared'
 
 def copy_malware(path):
@@ -34,12 +34,11 @@ def execute_malware(file_name):
     try:
         process = subprocess.Popen([
             VBOXMANAGE, "guestcontrol", VBOXNAME, "run",
-            "--exe", guest_path, "--username", "sandbox", "--password", "1234",
-            "--verbose"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            "--exe", guest_path, "--username", "sandbox", "--password", "1234", "--verbose"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         time.sleep(30)
         try:
             stdout, stderr = process.communicate(timeout=60)
-            print(f"file executed")
+            print(f"file executed\n{stdout.decode()}\n{stderr.decode()}")
         except subprocess.TimeoutExpired:
             process.terminate()
             print(f"file execution timed out")

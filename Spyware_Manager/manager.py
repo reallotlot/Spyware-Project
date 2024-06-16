@@ -133,9 +133,6 @@ class Analysis():
         return msg
 
 
-    def __disinfect(self, path, file_name):
-        pass
-
     def run_analysis(self, path, local_sandbox: bool) -> str:
         try:
             self.SCAN_ID += 1

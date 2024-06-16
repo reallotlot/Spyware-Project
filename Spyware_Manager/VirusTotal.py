@@ -17,11 +17,11 @@ def load_key():
         
     return fernet.Fernet(enc_key).decrypt(api_key).decode()
 
-if True:
-    api_key = load_key()
-    
+   
     
 def scan_file(path):
+    api_key = load_key()
+    
     #trusted vendors
     trusted_vendors = ['google', 'avast', 'avg', 'kaspersky', 'malwarebytes', 'microsoft', 'bitdefender']
 

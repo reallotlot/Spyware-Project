@@ -52,9 +52,8 @@ def run_all_plugins(file_name):
         if not os.path.exists(data_path):
             os.makedirs(data_path)
         
-        with open(os.path.join(data_path, f'{plugin}.txt'), 'w+') as file:
+        with open(os.path.join(data_path, f'{plugin}.txt'), 'w') as file:
             file.write(formatted_output)
 
 if __name__ == '__main__':
-    #run_all_plugins('Flasher.exe')
     pass
