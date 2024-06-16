@@ -17,10 +17,6 @@ def load_key():
         
     return fernet.Fernet(enc_key).decrypt(api_key).decode()
 
-#Global variables
-API_KEY = load_key()
-API_ENDPOINT = r'https://www.hybrid-analysis.com/api/v2/submit/file'
-
 
 def get_win_ver():
     command = 'systeminfo | findstr /B /C:"OS Name"'
@@ -52,13 +48,17 @@ def get_env_id():
 
 def scan_file(path, file_name):
     #check if the file is valid for sandbox dynamic analysis
-    file_types = '.exe .dll .scr .sys .pdf .doc .docx .xls .xlsx .ppt .pptx .rtf .js .vbs .ps1 .zip .rar .7z .msi .iso'.split(' ')
+    file_types = '.exe .scr .pif .dll .com .cpl .doc .docx .ppt .pps .pptx .ppsx .xls .xlsx .rtf .pub .sct .hta .py .pl .chm .msi'.split(' ')
     for type in file_types: 
         if type in file_name:
             break 
     else:
-        #print('invalid file: ', file_name)
-        return None #file is not valid for scanning
+        return None #file is not executable
+         
+    
+    api_key = load_key()
+    api_endpoint = r'https://www.hybrid-analysis.com/api/v2/submit/file'
+     
          
     #set up the data for the sandbox analysis
     payload = {
@@ -70,22 +70,17 @@ def scan_file(path, file_name):
     }
     headers = {
         'accept': 'application/json',
-        'api-key': API_KEY
+        'api-key': api_key
     }
 
     # Submit the file for analysis in the sandbox
-    response = requests.post(API_ENDPOINT, headers=headers, files=files, data=payload)
+    response = requests.post(api_endpoint, headers=headers, files=files, data=payload)
     analysis_id = ''
 
     if response.status_code == 201:
         analysis_result = response.json()
         analysis_id = analysis_result.get('job_id')
-        #print("submitted file")
-        #print("analysis ID:", analysis_id)
     else:
-        #print("Failed to submit file.")
-        #print("Status Code:", response.status_code)
-        #print("Response:", response.text)
         return None
     
     
@@ -95,34 +90,32 @@ def scan_file(path, file_name):
         status_response = requests.get(status_endpoint, headers=headers)
         status_data = status_response.json()
         
-        if status_data.get('state') == 'SUCCESS':
-            #print("analysis complete.")
+        if status_data.get('state') == 'SUCCESS' or status_data.get('state') == 'PARTIAL_SUCCESS':
             break
         elif status_data.get('state') == 'IN_PROGRESS':
-            #print("analysis in progress.")
             time.sleep(5)
         else:
-            #print("unexpected status:", status_data)
             return None
-    
     
     #retrieve the data from the reprot
     report_endpoint = f"https://www.hybrid-analysis.com/api/v2/report/{analysis_id}/summary"
     report_response = requests.get(report_endpoint, headers=headers)
     
+    
     if report_response.status_code == 200:
+        
         info = report_response.json()
+        is_mal = info.get('verdict')
         info_dict = {
             'path': os.path.abspath(path),
             'name': info.get('submit_name'),
-            'info': info.get('verdict')
+            'info': f"Threat Score: {info.get('threat_score')}"
         }
-        if info_dict['info'] in ['malicious','suspicious']:
+        if is_mal in ['malicious', 'suspicious']:
             return info_dict
         else:
             return None
     else:
-        #print("failed to fetch response")
         return None
     
     
@@ -130,7 +123,7 @@ def scan_dir(path):
     results = []
     if not os.path.isdir(path):
         res = scan_file(path, os.path.basename(path))
-        if res is not None: results += res 
+        if res is not None: results.append(res) 
     else:
         for file in os.listdir(path):
             file_path = os.path.join(path,file)
@@ -140,8 +133,8 @@ def scan_dir(path):
                 res = scan_file(file_path, file)
                 if res is not None:
                     results.append(res)
-        return  results        
+    return results        
     
     
 if __name__ == "__main__":
-    pass
+    print(scan_dir(r'C:\Users\lotan\project\Spyware-Project\malware\Flasher.exe'))

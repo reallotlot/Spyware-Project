@@ -1,4 +1,4 @@
-from . import HashManager ,YaraManager ,HybridManager ,VirusTotal, Disinfection, StringsManager, LocalSandbox
+from . import HashManager ,YaraManager ,HybridManager ,VirusTotal, StringsManager, LocalSandbox
 import os
 import threading
 from datetime import datetime

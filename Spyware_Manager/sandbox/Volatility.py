@@ -39,7 +39,7 @@ def run_all_plugins(file_name):
         'windows.netscan',
         'windows.malfind',
         'windows.netstat',
-        'windows.cmdline'
+        'windows.cmdline',
     ]
 
     for plugin in plugins:

@@ -2,13 +2,9 @@ import os
 import time
 import yara
 
-#DO NOT CHANGE THIS PATH UNLESS YOU KNOW WHAT YOU ARE DOING!
-#DOING SO WILL CAUSE THE PROGRAM TO NOT BE ABLE TO USE MOST OF THE YARA RULES
-#CAUSING SECURITY RISKS
+
 compiled_rules_path = f'{os.path.dirname(os.path.abspath(__file__))}\yarafiles\compiled-rule-master'
 
-
-#one time run will only run once if the compiled rules file is empty!!!!!!
 def compile_rulemaster_rules():
     os.makedirs(compiled_rules_path)
     while not (os.path.exists(compiled_rules_path)):
